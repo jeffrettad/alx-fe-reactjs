@@ -9,7 +9,11 @@ function App() {
       <Header />
       <MainContent />
       <WelcomeMessage />
-      <UserProfile name="Alice" age="25" bio="Love hiking and photography" />
+       <UserProfile
+        name="Alice"
+        age="25"
+        bio="Loves hiking and photography"
+      />
       <Footer />
     </div>
     
