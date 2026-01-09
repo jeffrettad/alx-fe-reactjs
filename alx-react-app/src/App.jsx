@@ -6,11 +6,11 @@ function App() {
   return (
     <div>
       <Header />
-      <MainContent/>
+      <MainContent />
       <WelcomeMessage />
       <Footer />
-
     </div>
+    
   );
 }
 
