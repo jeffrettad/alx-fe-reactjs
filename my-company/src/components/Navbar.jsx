@@ -6,7 +6,8 @@ function Navbar() {
       style={{
         backgroundColor: 'navy',
         padding: '15px',
-        textAlign: 'center'
+        textAlign: 'center',
+        display: 'justifyContent'
       }}
     >
       <Link to="/" style={{ color: 'white', margin: '10px' }}>Home</Link>
