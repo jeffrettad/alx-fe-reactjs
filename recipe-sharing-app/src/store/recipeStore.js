@@ -1,37 +1,62 @@
 import { create } from 'zustand';
 
 export const useRecipeStore = create((set, get) => ({
+  // ======================
+  // STATE
+  // ======================
   recipes: [],
   searchTerm: '',
   filteredRecipes: [],
   favorites: [],
   recommendations: [],
 
+  // ======================
+  // REQUIRED BY TASK 0
+  // ======================
+  setRecipes: (recipes) =>
+    set({
+      recipes,
+      filteredRecipes: recipes,
+    }),
+
+  // ======================
+  // BASIC RECIPE ACTIONS
+  // ======================
   addRecipe: (newRecipe) =>
-    set((state) => ({
-      recipes: [...state.recipes, newRecipe],
-      filteredRecipes: [...state.recipes, newRecipe],
-    })),
+    set((state) => {
+      const updatedRecipes = [...state.recipes, newRecipe];
+      return {
+        recipes: updatedRecipes,
+        filteredRecipes: updatedRecipes,
+      };
+    }),
 
   updateRecipe: (updatedRecipe) =>
-    set((state) => ({
-      recipes: state.recipes.map((recipe) =>
+    set((state) => {
+      const updatedRecipes = state.recipes.map((recipe) =>
         recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-      ),
-      filteredRecipes: state.filteredRecipes.map((recipe) =>
-        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-      ),
-    })),
+      );
+      return {
+        recipes: updatedRecipes,
+        filteredRecipes: updatedRecipes,
+      };
+    }),
 
   deleteRecipe: (id) =>
-    set((state) => ({
-      recipes: state.recipes.filter((recipe) => recipe.id !== id),
-      filteredRecipes: state.filteredRecipes.filter(
+    set((state) => {
+      const updatedRecipes = state.recipes.filter(
         (recipe) => recipe.id !== id
-      ),
-      favorites: state.favorites.filter((favId) => favId !== id),
-    })),
+      );
+      return {
+        recipes: updatedRecipes,
+        filteredRecipes: updatedRecipes,
+        favorites: state.favorites.filter((favId) => favId !== id),
+      };
+    }),
 
+  // ======================
+  // SEARCH & FILTERING
+  // ======================
   setSearchTerm: (term) =>
     set((state) => ({
       searchTerm: term,
@@ -40,6 +65,9 @@ export const useRecipeStore = create((set, get) => ({
       ),
     })),
 
+  // ======================
+  // FAVORITES
+  // ======================
   addFavorite: (recipeId) =>
     set((state) => ({
       favorites: [...state.favorites, recipeId],
@@ -50,6 +78,9 @@ export const useRecipeStore = create((set, get) => ({
       favorites: state.favorites.filter((id) => id !== recipeId),
     })),
 
+  // ======================
+  // RECOMMENDATIONS
+  // ======================
   generateRecommendations: () => {
     const { recipes, favorites } = get();
 

@@ -11,7 +11,16 @@ export const useRecipeStore = create((set, get) => ({
   recommendations: [],
 
   // ======================
-  // BASIC RECIPE ACTIONS (Task 0 & 1)
+  // REQUIRED BY TASK 0
+  // ======================
+  setRecipes: (recipes) =>
+    set({
+      recipes,
+      filteredRecipes: recipes,
+    }),
+
+  // ======================
+  // BASIC RECIPE ACTIONS
   // ======================
   addRecipe: (newRecipe) =>
     set((state) => {
@@ -46,7 +55,7 @@ export const useRecipeStore = create((set, get) => ({
     }),
 
   // ======================
-  // SEARCH & FILTERING (Task 2)
+  // SEARCH & FILTERING
   // ======================
   setSearchTerm: (term) =>
     set((state) => ({
@@ -57,7 +66,7 @@ export const useRecipeStore = create((set, get) => ({
     })),
 
   // ======================
-  // FAVORITES (Task 3)
+  // FAVORITES
   // ======================
   addFavorite: (recipeId) =>
     set((state) => ({
@@ -70,7 +79,7 @@ export const useRecipeStore = create((set, get) => ({
     })),
 
   // ======================
-  // RECOMMENDATIONS (Task 3)
+  // RECOMMENDATIONS
   // ======================
   generateRecommendations: () => {
     const { recipes, favorites } = get();
