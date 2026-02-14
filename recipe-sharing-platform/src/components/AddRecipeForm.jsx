@@ -4,74 +4,77 @@ function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
-  const [error, setError] = useState("");
+
+  // Must be exactly named
+  const [errors, setErrors] = useState({});
+
+  // Must be exactly named
+  const validate = () => {
+    const newErrors = {};
+    if (!title) newErrors.title = "Title is required";
+    if (!ingredients) newErrors.ingredients = "Ingredients are required";
+    if (!instructions) newErrors.instructions = "Instructions are required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Basic validation
-    if (!title || !ingredients || !instructions) {
-      setError("All fields are required");
-      return;
-    }
-
-    const newRecipe = {
-      id: Date.now(), // temporary ID
-      title,
-      ingredients: ingredients.split(",").map((i) => i.trim()),
-      instructions: instructions.split(".").map((s) => s.trim()).filter(Boolean),
-      summary: instructions.split(".")[0] || "",
-      image: "https://via.placeholder.com/150", // placeholder
-    };
-
-    console.log("New Recipe:", newRecipe);
+    if (!validate()) return;
 
     // Reset form
     setTitle("");
     setIngredients("");
     setInstructions("");
-    setError("");
-    alert("Recipe submitted! Check console for details.");
+    setErrors({});
+    alert("Recipe submitted!");
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-2xl shadow-md mt-8">
-      <h1 className="text-2xl font-bold mb-4">Add New Recipe</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+    <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-6">
+      <h2 className="text-2xl font-bold mb-4">Add New Recipe</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block font-semibold mb-1">Recipe Title</label>
+          <label className="block mb-1 font-semibold">Recipe Title</label>
           <input
             type="text"
-            className="w-full border rounded-lg p-2"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className="w-full border rounded-lg p-2"
           />
+          {errors.title && (
+            <p className="text-red-500 text-sm">{errors.title}</p>
+          )}
         </div>
 
         <div>
-          <label className="block font-semibold mb-1">
+          <label className="block mb-1 font-semibold">
             Ingredients (comma separated)
           </label>
           <textarea
-            className="w-full border rounded-lg p-2"
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
             rows={3}
-          ></textarea>
+            className="w-full border rounded-lg p-2"
+          />
+          {errors.ingredients && (
+            <p className="text-red-500 text-sm">{errors.ingredients}</p>
+          )}
         </div>
 
         <div>
-          <label className="block font-semibold mb-1">
-            Instructions (use periods to separate steps)
-          </label>
+          <label className="block mb-1 font-semibold">Instructions</label>
           <textarea
-            className="w-full border rounded-lg p-2"
             value={instructions}
             onChange={(e) => setInstructions(e.target.value)}
             rows={5}
-          ></textarea>
+            className="w-full border rounded-lg p-2"
+          />
+          {errors.instructions && (
+            <p className="text-red-500 text-sm">{errors.instructions}</p>
+          )}
         </div>
 
         <button
