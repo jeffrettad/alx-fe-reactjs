@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import RecipeDetail from "./components/RecipeDetail";
-import HomePage from "./components/HomePage";
-import RecipeDetail from "./components/RecipeDetail"; // Make sure the spelling and capitalization match the file exactly
 import AddRecipeForm from "./components/AddRecipeForm";
 
 
