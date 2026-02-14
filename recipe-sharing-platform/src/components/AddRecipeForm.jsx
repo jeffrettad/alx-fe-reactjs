@@ -3,18 +3,15 @@ import { useState } from "react";
 function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState(""); // ALX expects this name
 
-  // Must be exactly named
   const [errors, setErrors] = useState({});
 
-  // Must be exactly named
   const validate = () => {
     const newErrors = {};
     if (!title) newErrors.title = "Title is required";
     if (!ingredients) newErrors.ingredients = "Ingredients are required";
-    if (!instructions) newErrors.instructions = "Instructions are required";
-
+    if (!steps) newErrors.steps = "Steps are required"; // must match ALX
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -26,7 +23,7 @@ function AddRecipeForm() {
     // Reset form
     setTitle("");
     setIngredients("");
-    setInstructions("");
+    setSteps("");
     setErrors({});
     alert("Recipe submitted!");
   };
@@ -44,9 +41,7 @@ function AddRecipeForm() {
             onChange={(e) => setTitle(e.target.value)}
             className="w-full border rounded-lg p-2"
           />
-          {errors.title && (
-            <p className="text-red-500 text-sm">{errors.title}</p>
-          )}
+          {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
         </div>
 
         <div>
@@ -65,16 +60,14 @@ function AddRecipeForm() {
         </div>
 
         <div>
-          <label className="block mb-1 font-semibold">Instructions</label>
+          <label className="block mb-1 font-semibold">Steps</label>
           <textarea
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
             rows={5}
             className="w-full border rounded-lg p-2"
           />
-          {errors.instructions && (
-            <p className="text-red-500 text-sm">{errors.instructions}</p>
-          )}
+          {errors.steps && <p className="text-red-500 text-sm">{errors.steps}</p>}
         </div>
 
         <button
