@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish made with eggs, cheese, bacon, and black pepper.",
+    "image": "https://images.unsplash.com/photo-1589307004394-5a6fda6a8b98"
+  },
+  {
+    "id": 2,
+    "title": "Chicken Tikka Masala",
+    "summary": "Grilled chicken cooked in a rich and creamy tomato-based sauce.",
+    "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d"
+  },
+  {
+    "id": 3,
+    "title": "Vegetable Stir Fry",
+    "summary": "A healthy mix of vegetables sautéed in a flavorful soy sauce.",
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd"
+  }
+]
