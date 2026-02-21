@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 
 function PostsComponent() {
 
-  // Fetch function
+  // Fetch posts function
   const fetchPosts = async () => {
 
     const response = await fetch(
@@ -11,13 +11,13 @@ function PostsComponent() {
     );
 
     if (!response.ok) {
-      throw new Error("Error fetching posts");
+      throw new Error("Failed to fetch posts");
     }
 
     return response.json();
   };
 
-  // useQuery hook
+  // React Query with required caching options
   const {
     data,
     isLoading,
@@ -28,25 +28,26 @@ function PostsComponent() {
     "posts",
     fetchPosts,
     {
-      staleTime: 60000
+      cacheTime: 1000 * 60 * 10,        // cache for 10 minutes
+      staleTime: 1000 * 60 * 5,         // fresh for 5 minutes
+      refetchOnWindowFocus: true,       // refetch when window focus
+      keepPreviousData: true            // keep previous data during refetch
     }
   );
 
-  // Loading state
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <h2>Loading posts...</h2>;
   }
 
-  // Error state
   if (isError) {
-    return <h2>{error.message}</h2>;
+    return <h2>Error: {error.message}</h2>;
   }
 
   return (
 
     <div>
 
-      <h1>Posts</h1>
+      <h1>Posts List</h1>
 
       <button onClick={refetch}>
         Refetch Posts
@@ -54,7 +55,12 @@ function PostsComponent() {
 
       {data.map((post) => (
 
-        <div key={post.id}>
+        <div key={post.id}
+             style={{
+               border: "1px solid gray",
+               margin: "10px",
+               padding: "10px"
+             }}>
 
           <h3>{post.title}</h3>
 
