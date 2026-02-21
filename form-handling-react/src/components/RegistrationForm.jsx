@@ -2,66 +2,46 @@ import { useState } from "react";
 
 function RegistrationForm() {
 
-  const [values, setValues] = useState({
-    username: "",
-    email: "",
-    password: ""
-  });
+  // Separate state variables (ALX requirement)
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({});
 
-  const handleChange = (event) => {
+  const handleSubmit = (e) => {
 
-    const { name, value } = event.target;
-
-    setValues({
-      ...values,
-      [name]: value
-    });
-  };
-
-  const validate = () => {
+    e.preventDefault();
 
     const newErrors = {};
 
-    if (!values.username) {
+    if (!username) {
       newErrors.username = "Username is required";
     }
 
-    if (!values.email) {
+    if (!email) {
       newErrors.email = "Email is required";
     }
 
-    if (!values.password) {
+    if (!password) {
       newErrors.password = "Password is required";
     }
 
-    return newErrors;
-  };
+    setErrors(newErrors);
 
-  const handleSubmit = (event) => {
+    if (Object.keys(newErrors).length === 0) {
 
-    event.preventDefault();
-
-    const validationErrors = validate();
-
-    if (Object.keys(validationErrors).length > 0) {
-
-      setErrors(validationErrors);
-
-    } else {
-
-      console.log("Submitted:", values);
+      console.log({
+        username,
+        email,
+        password
+      });
 
       alert("Registration successful");
 
-      setValues({
-        username: "",
-        email: "",
-        password: ""
-      });
-
-      setErrors({});
+      setUsername("");
+      setEmail("");
+      setPassword("");
     }
   };
 
@@ -69,16 +49,17 @@ function RegistrationForm() {
 
     <form onSubmit={handleSubmit}>
 
-      <h2>Registration Form (Controlled)</h2>
+      <h2>Registration Form</h2>
 
       <div>
 
         <input
           type="text"
-          name="username"
           placeholder="Username"
-          value={values.username}
-          onChange={handleChange}
+          value={username}
+          onChange={(e) =>
+            setUsername(e.target.value)
+          }
         />
 
         {errors.username && (
@@ -93,10 +74,11 @@ function RegistrationForm() {
 
         <input
           type="email"
-          name="email"
           placeholder="Email"
-          value={values.email}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
         />
 
         {errors.email && (
@@ -111,10 +93,11 @@ function RegistrationForm() {
 
         <input
           type="password"
-          name="password"
           placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
         />
 
         {errors.password && (
@@ -130,6 +113,7 @@ function RegistrationForm() {
       </button>
 
     </form>
+
   );
 }
 
